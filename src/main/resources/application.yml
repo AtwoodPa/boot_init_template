@@ -1,21 +1,19 @@
 # THYMELEAF (ThymeleafAutoConfiguration)
 # 开启模板缓存（默认值： true ）
 spring:
+  logging:
+    level:
+      org.springframework:
+        security: trace
+  thymeleaf:
+    cache: false
+  jackson:
+    serialization:
+      indent-output: true
   security:
     user:
       name: panpan
       password: 123123
-  thymeleaf:
-    cache: true
-    check-template: true
-    check-template-location: true
-    content-type: text/html
-    enabled: true
-    encoding: UTF-8
-    excluded-view-names:
-    mode: HTML5
-    prefix: classpath:/templates/
-    suffix: .html
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://localhost:3306/init_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
