@@ -1,10 +1,6 @@
 package com.pp.boot.demos.test;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
@@ -12,7 +8,7 @@ import org.springframework.web.util.UriComponentsBuilder;
  * @author supanpan
  * @date 2024/05/15
  */
-@Controller
+@RestController
 public class TestApiController {
 
     /**
@@ -22,7 +18,6 @@ public class TestApiController {
      * @return
      */
     @RequestMapping(value = "/test_uri", method = {RequestMethod.GET})
-    @ResponseBody
     public String test(UriComponentsBuilder builder) {
         return builder.toUriString();
     }
