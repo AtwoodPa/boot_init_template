@@ -1,8 +1,7 @@
 package com.pp.boot.services;
 
-import com.pp.boot.domain.wms.InventoryApplication;
+import com.pp.boot.model.entity.InventoryApplication;
 import com.pp.boot.mapper.InventoryMapper;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

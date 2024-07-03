@@ -1,4 +1,4 @@
-package com.pp.boot.domain.wms;
+package com.pp.boot.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

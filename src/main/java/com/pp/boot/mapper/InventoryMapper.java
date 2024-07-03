@@ -1,6 +1,6 @@
 package com.pp.boot.mapper;
 
-import com.pp.boot.domain.wms.InventoryApplication;
+import com.pp.boot.model.entity.InventoryApplication;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
