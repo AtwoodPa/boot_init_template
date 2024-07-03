@@ -1,6 +1,8 @@
-# THYMELEAF (ThymeleafAutoConfiguration)
-# 开启模板缓存（默认值： true ）
 spring:
+  output:
+    ansi:
+      # 日志彩色打印
+      enabled: always
   logging:
     level:
       org.springframework:
