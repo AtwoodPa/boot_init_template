@@ -1,7 +1,7 @@
 package com.pp.boot.demos.test;
 
 import com.google.zxing.WriterException;
-import com.pp.boot.services.QRCodeGenerationService;
+import com.pp.boot.services.demo.QRCodeGenerationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

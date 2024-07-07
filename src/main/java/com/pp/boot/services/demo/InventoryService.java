@@ -1,7 +1,7 @@
-package com.pp.boot.services;
+package com.pp.boot.services.demo;
 
-import com.pp.boot.model.entity.InventoryApplication;
-import com.pp.boot.mapper.InventoryMapper;
+import com.pp.boot.model.entity.demo.InventoryApplication;
+import com.pp.boot.mapper.demo.InventoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

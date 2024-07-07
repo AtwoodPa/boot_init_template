@@ -1,4 +1,4 @@
-package com.pp.boot.model.entity;
+package com.pp.boot.model.entity.demo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

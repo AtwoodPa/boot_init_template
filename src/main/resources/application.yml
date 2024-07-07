@@ -104,7 +104,16 @@ ee-admin:
   name: EE
   version: v1.0.0
 
-
+# token配置
+token:
+  # 令牌自定义标识
+  header: Authorization
+  # 令牌密钥
+  secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+  # 令牌有效期（默认30分钟）
+  expireTime: 30
+  # 过期时间：一天
+  expiration: 86400000
 
 
 springdoc:

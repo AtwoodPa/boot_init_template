@@ -1,6 +1,6 @@
-package com.pp.boot.mapper;
+package com.pp.boot.mapper.demo;
 
-import com.pp.boot.model.entity.InventoryApplication;
+import com.pp.boot.model.entity.demo.InventoryApplication;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

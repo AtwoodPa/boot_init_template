@@ -1,8 +1,8 @@
 package com.pp.boot.demos.test;
 
 import com.pp.boot.common.base.Result;
-import com.pp.boot.model.entity.InventoryApplication;
-import com.pp.boot.services.InventoryService;
+import com.pp.boot.model.entity.demo.InventoryApplication;
+import com.pp.boot.services.demo.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

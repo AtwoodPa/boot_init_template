@@ -3,15 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.pp.boot.mapper.InventoryMapper">
-    <resultMap id="inventoryApplicationResult" type="com.pp.boot.model.entity.InventoryApplication">
+<mapper namespace="com.pp.boot.mapper.demo.InventoryMapper">
+    <resultMap id="inventoryApplicationResult" type="com.pp.boot.model.entity.demo.InventoryApplication">
             <id property="id" column="id"/>
             <result property="deviceName" column="device_name"/>
             <result property="deviceDetails" column="device_details"/>
             <result property="approved" column="approved"/>
             <result property="qrCodeUrl" column="qr_code_url"/>
     </resultMap>
-    <insert id="insertApplication" parameterType="com.pp.boot.model.entity.InventoryApplication">
+    <insert id="insertApplication" parameterType="com.pp.boot.model.entity.demo.InventoryApplication">
         INSERT INTO inventory_application (device_name, device_details, approved, qr_code_url, created_at, updated_at)
         VALUES (#{deviceName}, #{deviceDetails}, #{approved}, #{qrCodeUrl}, #{createdAt}, #{updatedAt})
     </insert>
@@ -20,7 +20,7 @@
         SELECT * FROM inventory_application WHERE id = #{id}
     </select>
 
-    <update id="updateApplication" parameterType="com.pp.boot.model.entity.InventoryApplication">
+    <update id="updateApplication" parameterType="com.pp.boot.model.entity.demo.InventoryApplication">
         UPDATE inventory_application
         SET device_name = #{deviceName}, device_details = #{deviceDetails}, approved = #{approved},
             qr_code_url = #{qrCodeUrl}, updated_at = CURRENT_TIMESTAMP
