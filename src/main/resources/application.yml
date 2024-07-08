@@ -1,4 +1,8 @@
 spring:
+  # 资源信息
+  messages:
+    # 国际化资源文件路径
+    basename: i18n/messages
   profiles:
     active: druid
   # 文件上传
@@ -60,7 +64,7 @@ mybatis:
   # 主键自增策略：uuid
   configuration:
     default-id-type: uuid
-  mapper-locations: classpath:mapper/*xml
+  mapper-locations: classpath*:mapper/**/*.xml
   type-aliases-package: com.pp.boot.domain.entity
 
 # 应用服务 WEB 访问端口
@@ -72,7 +76,13 @@ server:
   servlet:
     # 应用的访问路径
     context-path:
-
+# 用户配置
+user:
+  password:
+    # 密码最大错误次数
+    maxRetryCount: 5
+    # 密码锁定时间（默认10分钟）
+    lockTime: 10
 panpan:
   name: panpan
 
@@ -85,7 +95,7 @@ token:
   # 令牌自定义标识
   header: Authorization
   # 令牌密钥
-  secretKey: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+  secretKey: XKN3t+21VOjDKgQPAUgYyZcoSGtV44gONm1Z4tgvjN4kGpQDhuO8A/GaVKcRGRCY+E7R582nhvYBJuPhGYnGFQ==
   # 令牌有效期（默认30分钟）
   expireTime: 30
 
@@ -122,3 +132,5 @@ springdoc:
       packages-to-scan: com.pp.boot.demos.web
     - group: 2.测试模块
       packages-to-scan: com.pp.boot.demos.test
+    - group: 3.Security模块
+      packages-to-scan: com.pp.boot.web.controller.system

@@ -37,7 +37,7 @@ public class GlobalExceptionTestController {
      * @return
      * @throws NoLoginException
      */
-    @GetMapping("/login")
+    @GetMapping("/loginxxx")
     public Result<String> login(@RequestParam(value = "loggedIn", defaultValue = "false") boolean loggedIn) throws NoLoginException {
         if (!loggedIn) {
             throw new NoLoginException();

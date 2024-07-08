@@ -4,8 +4,14 @@ import com.pp.boot.common.base.Constants;
 import com.pp.boot.common.cache.CacheConstants;
 import com.pp.boot.common.cache.RedisCache;
 import com.pp.boot.common.security.model.LoginUser;
+import com.pp.boot.common.utils.AddressUtils;
+import com.pp.boot.common.utils.IdUtils;
+import com.pp.boot.common.utils.IpUtils;
+import com.pp.boot.common.utils.ServletUtils;
+import eu.bitwalker.useragentutils.UserAgent;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +23,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -158,6 +166,7 @@ public class TokenService {
 
     /**
      * 删除用户缓存记录
+     *
      * @param token
      */
     public void delLoginUser(String token) {
@@ -168,4 +177,49 @@ public class TokenService {
             redisCache.deleteObject(userKey);
         }
     }
+
+    /**
+     * 创建令牌
+     *
+     * @param loginUser
+     * @return
+     */
+    public String createToken(LoginUser loginUser) {
+        String token = IdUtils.fastUUID();
+        loginUser.setToken(token);
+
+        setUserAgent(loginUser);
+        refreshToken(loginUser);
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put(Constants.LOGIN_USER_KEY, token);
+        return createToken(claims);
+    }
+
+    /**
+     * 设置用户代理信息
+     *
+     * @param loginUser 登录信息
+     */
+    public void setUserAgent(LoginUser loginUser) {
+        UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
+        String ip = IpUtils.getIpAddr();
+        loginUser.setIpaddr(ip);
+        loginUser.setLoginLocation(AddressUtils.getRealAddressByIP(ip));
+        loginUser.setBrowser(userAgent.getBrowser().getName());
+    }
+
+    /**
+     * 从数据声明生成令牌
+     *
+     * @param claims 数据声明
+     * @return 令牌
+     */
+    private String createToken(Map<String, Object> claims) {
+        String token = Jwts.builder()
+                .setClaims(claims)
+                .signWith(SignatureAlgorithm.HS512, secretKey).compact();
+        return token;
+    }
+
 }

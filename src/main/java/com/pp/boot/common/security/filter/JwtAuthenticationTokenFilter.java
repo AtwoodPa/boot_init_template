@@ -44,20 +44,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
-        // 判断请求路径是否包含"/api/v1/auth"，如果包含，则直接调用过滤器链的下一个过滤器
-        if (request.getServletPath().contains("/api/v1/auth")) {
-            // 如果是，则直接调用过滤器链的下一个过滤器
-            filterChain.doFilter(request, response);
-            return;
-        }
-        // 获取请求头中的"Authorization"字段
-        final String authHeader = request.getHeader("Authorization");
-        // 如果请求头中没有"Authorization"字段，或者"Authorization"字段不以"Bearer "开头
-        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
-            // 则直接调用过滤器链的下一个过滤器
-            filterChain.doFilter(request, response);
-            return;
-        }
         // 获取登录用户信息
         LoginUser loginUser = tokenService.getLoginUser(request);
         if (StringUtils.isNotNull(loginUser) && StringUtils.isNull(SecurityUtils.getAuthentication())) {

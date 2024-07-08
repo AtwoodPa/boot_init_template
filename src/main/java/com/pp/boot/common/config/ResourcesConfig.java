@@ -3,6 +3,7 @@ package com.pp.boot.common.config;
 import com.pp.boot.common.base.Constants;
 import com.pp.boot.common.interceptor.RepeatSubmitInterceptor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;
@@ -24,16 +25,18 @@ import java.util.concurrent.TimeUnit;
 public class ResourcesConfig implements WebMvcConfigurer {
     // 重复提交拦截器
     private final RepeatSubmitInterceptor repeatSubmitInterceptor;
-    public void addResourceHandlers(ResourceHandlerRegistry registry){
+
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
         /** 本地文件上传路径 */
         registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/**")
-                .addResourceLocations("file:" +  "/");
+                .addResourceLocations("file:" + "/");
 
         /** swagger配置 */
         registry.addResourceHandler("/swagger-ui/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/")
                 .setCacheControl(CacheControl.maxAge(5, TimeUnit.HOURS).cachePublic());
     }
+
     /**
      * 自定义拦截规则 - 重复提交拦截器
      */
@@ -41,12 +44,12 @@ public class ResourcesConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(repeatSubmitInterceptor).addPathPatterns("/**");
     }
+
     /**
      * 跨域配置
      */
     @Bean
-    public CorsFilter corsFilter()
-    {
+    public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         // 设置访问源地址

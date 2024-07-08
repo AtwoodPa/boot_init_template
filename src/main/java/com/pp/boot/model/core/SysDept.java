@@ -1,6 +1,6 @@
 package com.pp.boot.model.core;
 
-import com.pp.boot.model.common.BaseEntity;
+import com.pp.boot.common.core.domain.BaseEntity;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.pp.boot.model.core;
 
-import com.pp.boot.model.common.BaseEntity;
+import com.pp.boot.common.core.domain.BaseEntity;
 
 import java.util.Date;
 import java.util.List;
@@ -259,5 +259,13 @@ public class SysUser extends BaseEntity {
 
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
+    }public boolean isAdmin()
+    {
+        return isAdmin(this.userId);
+    }
+
+    public static boolean isAdmin(Long userId)
+    {
+        return userId != null && 1L == userId;
     }
 }

@@ -1,6 +1,9 @@
 package com.pp.boot.mapper.system;
 
+import com.pp.boot.model.core.SysRole;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
 * @author panpan
@@ -11,5 +14,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SysRoleMapper {
 
-
+    /**
+     * 根据用户ID查询角色
+     *
+     * @param userId 用户ID
+     * @return 角色列表
+     */
+    List<SysRole> selectRolePermissionByUserId(Long userId);
 }

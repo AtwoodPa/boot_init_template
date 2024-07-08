@@ -1,4 +1,4 @@
-package com.pp.boot.model.common;
+package com.pp.boot.common.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
