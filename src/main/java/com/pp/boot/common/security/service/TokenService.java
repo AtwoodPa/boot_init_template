@@ -155,4 +155,17 @@ public class TokenService {
         String userKey = getTokenKey(loginUser.getToken());
         redisCache.setCacheObject(userKey, loginUser, expireTime, TimeUnit.MINUTES);
     }
+
+    /**
+     * 删除用户缓存记录
+     * @param token
+     */
+    public void delLoginUser(String token) {
+        if (StringUtils.isNotEmpty(token)) {
+            // 获取缓存中存储的Key
+            String userKey = getTokenKey(token);
+            // 删除缓存中的用户信息
+            redisCache.deleteObject(userKey);
+        }
+    }
 }

@@ -1,13 +1,26 @@
 package com.pp.boot.common.security.config;
 
 import com.pp.boot.common.security.filter.JwtAuthenticationTokenFilter;
+import com.pp.boot.common.security.handler.LogoutSuccessHandlerImpl;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.web.filter.CorsFilter;
+
+import java.io.IOException;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -21,9 +34,17 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecurityConfiguration {
 
     /**
+     * 退出处理类
+     */
+    private final LogoutSuccessHandlerImpl logoutSuccessHandler;
+    /**
      * token认证过滤器
      */
     private final JwtAuthenticationTokenFilter authenticationTokenFilter;
+    /**
+     * 跨域过滤器
+     */
+    private final CorsFilter corsFilter;
     /**
      * 配置白名单地址
      */
@@ -57,34 +78,19 @@ public class SecurityConfiguration {
                 )
                 // 禁用session
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
+                .logout().logoutUrl("/api/v1/auth/logout").logoutSuccessHandler(logoutSuccessHandler)
+                .and()
 //                .authenticationProvider(authenticationProvider)
-//                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-//                .logout(logout ->
-//                        logout.logoutUrl("/api/v1/auth/logout")
-//                                .addLogoutHandler(logoutHandler)
-//                                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
-//                )
+                // 添加JWT filter，指定在UsernamePasswordAuthenticationFilter之前执行
+                .addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                // 添加CORS filter，指定在JwtAuthenticationTokenFilter之前执行
+                .addFilterBefore(corsFilter, JwtAuthenticationTokenFilter.class)
+                // 添加CORS filter，指定在LogoutFilter之前执行
+                .addFilterBefore(corsFilter, LogoutFilter.class)
         ;
 
 
         return http.build();
     }
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                // 禁用 CSRF (防止跨站请求伪造攻击)
-//                .csrf().disable()
-//                // 配置请求权限规则
-//                .authorizeHttpRequests(authz -> authz.anyRequest().permitAll()
-////                        // 对静态资源路径进行放行（不进行校验）
-//                        // .requestMatchers("/swagger-ui/**", "/druid/**").permitAll()
-////                        // 其他请求需要进行校验
-////                        .anyRequest().authenticated()
-//                )
-//                // 禁用缓存
-//                .headers(headers -> headers.cacheControl().disable())
-//                // 禁用 session（使用无状态认证）
-//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-//        return http.build();
-//    }
+
 }
